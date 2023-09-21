@@ -1,47 +1,74 @@
 import * as THREE from 'three';
- import React, { useRef } from 'react'
+ import React, { useRef, useState } from 'react'
  import { useFrame, extend } from "@react-three/fiber";
 import { useGLTF, shaderMaterial } from "@react-three/drei";
 useGLTF.preload("/Eyes_Keem.glb");
 
-const ColorShiftMaterial = shaderMaterial(
-   { uTime: 0, uColor: new THREE.Color(0.2, 0.0, 0.1) },
-   // vertex shader
-   /*glsl*/`
-   uniform float uTime;
-   varying vec3 fragPosition;
 
-   // Perlin noise function
-   float noise(vec3 p) {
-     return sin(p.x * 10.0 + uTime) * sin(p.y * 10.0 + uTime) * sin(p.z * 10.0 + uTime);
-   }
+export const ImageFadeMaterial = shaderMaterial(
+   {
+     uTime: 0
+   },
+   /*glsl */` 
+   varying vec2 vUv;
+     void main() {
+       vUv = uv;
+       gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+     }`,
+   
+     /*glsl */` 
+     #define ss(a,b,t) smoothstep(a,b,t)
+     varying vec2 vUv;
+     uniform float uTime;
 
-   void main() {
-     // Generate noise and use it to displace the vertex position
-     vec3 offset = vec3(
-       noise(position),
-       noise(position + vec3(0.0, 0.0, uTime)),
-       noise(position + vec3(uTime, 0.0, 0.0))
-     );
+     float gyroid (vec3 seed) {
+         return dot(sin(seed), cos(seed.yzx));
+      }
+      
+      float fbm (vec3 seed) {
+            float result = 0.0, a = 0.5;
+            for (int i = 0; i < 5; ++i, a /= 2.0) {
+               seed.z += result * 0.5;
+               result += abs(gyroid(seed / a) * a);
+            }
+            return result;
+      }
+      
+      vec3 getColor(float t) {
+            // Define a color palette here
+            vec3 colors[5];
+            colors[0] = vec3(0.0, 0.5, 0.0); // Blue
+            colors[1] = vec3(0.0, 1.0, 0.0); // Green
+            colors[2] = vec3(1.0, 0.0, 0.0); // Red
+            colors[3] = vec3(1.0, 1.0, 0.0); // Yellow
+            colors[4] = vec3(0.8, 0.2, 0.8); // Purple
+            
+            int numColors = 5;
+            int index = int(floor(t * float(numColors)));
+            return colors[index];
+      }
 
-     vec3 distortedPosition = position + offset * 0.1; // Adjust the scale as needed
+     void main() {
+      vec2 p = vUv;
+      float d = length(p);
+      p = normalize(p) * log(length(p) * 0.5);
+      p = vec2(atan(p.y, p.x), length(p) * 0.5 + uTime * 0.5);
+      float shades = 6.0;
+      float shape = ss(0.9, 0.5, fbm(vec3(p * 0.5, 0.0)));
+      float shade = ceil(shape * shades) / shades;
+      
+      // Get a color based on the shade value
+      vec3 bgColor = getColor(shade);
+      
+      vec3 color = mix(bgColor, vec3(1.0), ss(2.0, 0.0, d));
+      
+       vec4 finalTexture = vec4(color, 1.0);
+       gl_FragColor = finalTexture;
 
-     gl_Position = projectionMatrix * modelViewMatrix * vec4(distortedPosition, 1.0);
-     fragPosition = distortedPosition;
-   }
-   `,
-   // fragment shader
-   /*glsl*/`
-   varying vec3 fragPosition;
-
-   void main() {
-     // Output color based on the distorted position
-     gl_FragColor = vec4(fragPosition, 1.0);
-   }
-   `
+     }`
  )
- // declaratively
- extend({ ColorShiftMaterial })
+ 
+ extend({ ImageFadeMaterial })
 
 const Eyes = ({ mousePosition, deviceOrientation }) => {
 
@@ -51,14 +78,14 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
    const objScale = isMobile ? 0.58 : 1;
    const objPos = isMobile ? [30, 0, 0] : [45.463, -29.926, 22.715]
    const { nodes, materials } = useGLTF("/Eyes_Keem.glb");
-   
+  
      const phoneAngle = 90; // Set the initial beta value you want
       const sensitivityY = 0.03; 
       const sensitivityX = 0.04; 
 
      useFrame(({clock}) => {
 
-      shaderRef.current.uTime = clock.getElapsedTime();
+      // shaderRef.current.uTime = clock.getElapsedTime();
 
       if (mousePosition) {
        const targetRotationX = -mousePosition[1] * Math.PI / 8;
@@ -86,35 +113,23 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
          }
          objRef.current.rotation.x += 0.04 * (targetRotationX - objRef.current.rotation.x);
          objRef.current.rotation.y += 0.03 * (targetRotationY - objRef.current.rotation.y);
-
-
-         // Calculate the yaw rotation angle (clamped alpha)
-         // const yawRotation = alpha * (Math.PI / 180); // Convert degrees to radians
-         // const minFaceYaw = -Math.PI / 4; // -90 degrees in radians
-         // const maxFaceYaw = Math.PI / 4;  // 90 degrees in radians
-         // const clampedYawRotation = Math.min(Math.max(yawRotation, minFaceYaw), maxFaceYaw);
-         // const portraitModeBeta = 90; // Adjust as needed
-         // // Calculate the tilt rotation based on the difference from portrait mode
-         // const tiltFactor = 0.6; // Adjust the factor as needed
-         // const tiltRotation = -(beta - portraitModeBeta) * tiltFactor * (Math.PI / 180);
-         // objRef.current.rotation.y = clampedYawRotation;
-         // objRef.current.rotation.x = tiltRotation;
        }
      });
 
 
-   
      return (
       <>
       <group dispose={null} ref={objRef} >
-       <mesh scale={objScale}
+       <mesh 
+         scale={objScale}
          castShadow
          receiveShadow
          geometry={nodes.Volume_Mesher.geometry}
          material={nodes.Volume_Mesher.material}
          position={objPos}>
-            {/* <meshBasicMaterial color={"#5b5b5b"}/> */}
-            <colorShiftMaterial uColor={"pink"} ref={shaderRef}/>
+            <meshStandardMaterial emissive={"grey"} color={"#5b5b5b"}/>
+            {/* <colorShiftMaterial uColor={"pink"} ref={shaderRef} /> */}
+            {/* <imageFadeMaterial ref={shaderRef} /> */}
       </mesh>
        
      </group>

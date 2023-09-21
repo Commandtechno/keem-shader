@@ -1,9 +1,14 @@
 import './App.css'
 import React, { useRef, useState, useEffect } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from '@react-three/drei';
+import { Canvas, extend } from "@react-three/fiber";
+import { OrbitControls, Effects } from '@react-three/drei';
+import { BloomPass } from "three/examples/jsm/postprocessing/BloomPass";
+import { GlitchPass } from "three/examples/jsm/postprocessing/GlitchPass";
 import Eyes from './components/Eyes';
 import { Suspense } from "react";
+
+
+extend({ GlitchPass, BloomPass });
 
 const fonts = [
    'Redaction',
@@ -84,24 +89,24 @@ const App = () => {
    const mouseX = (clientX / window.innerWidth) * 2 - 1;
    const mouseY = -(clientY / window.innerHeight) * 2 + 1;
  
-   // Calculate the time difference since the last mouse move
-   const newTime = performance.now();
-   const deltaTime = newTime - currentTime;
+   // // Calculate the time difference since the last mouse move
+   // const newTime = performance.now();
+   // const deltaTime = newTime - currentTime;
  
-   // Calculate the change in mouse position
-   const deltaX = mouseX - prevMousePosition[0];
-   const deltaY = mouseY - prevMousePosition[1];
+   // // Calculate the change in mouse position
+   // const deltaX = mouseX - prevMousePosition[0];
+   // const deltaY = mouseY - prevMousePosition[1];
  
-   // Calculate mouse speed based on change in position and time
-   const mouseSpeed = Math.sqrt(deltaX ** 2 + deltaY ** 2) / deltaTime;
+   // // Calculate mouse speed based on change in position and time
+   // const mouseSpeed = Math.sqrt(deltaX ** 2 + deltaY ** 2) / deltaTime;
  
    setMousePosition([mouseX, mouseY]);
-   setPrevMousePosition([mouseX, mouseY]);
-   setCurrentTime(newTime);
+   // setPrevMousePosition([mouseX, mouseY]);
+   // setCurrentTime(newTime);
 
-      if (mouseSpeed > 0.018)  {
+   //    if (mouseSpeed > 0.018)  {
 
-      }
+   //    }
    }};
 
    
@@ -112,9 +117,7 @@ const App = () => {
       <div style={{ width: "100vw", height: "100%" }} onMouseMove={onMouseMove}>
      { !hasPermission && isMobile && 
      <div onClick={getPermssion} className="enter"> <p>ENTER</p></div> }
-            <p ref={charRef} className='diction'
-            style={{ filter: 'url(#distort)' }}
-            >
+            <p ref={charRef} className='diction'>
         {Array.from('Learning...').map((char, index) => (
           <span key={index}>{char}</span>
         ))}
@@ -123,18 +126,22 @@ const App = () => {
           ref={mainRef}
           style={{background: '#BABABA'}}>
           <Canvas camera={{ position: [0, 0, 300] }} >
-               {/* <ambientLight/> */}
+               <Effects>
+                  <bloomPass attach="passes" factor={1}/>
+                  <glitchPass attach="passes"/>
+               </Effects>
+               {/* <ambientLight/>
                <pointLight position={[0, 0, 15]} intensity={1} />
                <pointLight position={[3, -3, 20]} />
+               <fog attach="fog" args={['#000', 2, 1]} /> */}
             <Suspense fallback={null}>     
             {isMobile ? (
                <Eyes mousePosition={null} deviceOrientation={deviceOrientation} />
                ) : (
                <Eyes mousePosition={mousePosition} deviceOrientation={null} />
             )}
-               {/* <fog attach="fog" args={['#000', 2, 10]} /> */}
-               {/* <OrbitControls/> */}
             </Suspense>
+            <OrbitControls/>
           </Canvas>
         </main>
       </div>
