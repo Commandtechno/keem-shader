@@ -6,6 +6,7 @@
     "@loaders.gl/draco": "^3.4.14",
     "@react-three/drei": "^9.80.3",
     "@react-three/fiber": "^8.13.6",
+    "@react-three/postprocessing": "^2.15.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

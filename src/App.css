@@ -38,8 +38,8 @@ main {
    width: 100vw;
    height: 100vh;
    overflow: hidden;
-   /* -webkit-filter: blur(5px) contrast(1);
-           filter: blur(5px) contrast(1); */
+   -webkit-filter: blur(5px) contrast(1);
+   filter: blur(5px) contrast(1);
 }
 
 .enter {
@@ -64,19 +64,18 @@ main {
 }
 
 
-
-
-
 .enter p:hover {
    opacity: 0.5;
 }
 
 .diction {
+   width: 8vw;
+   display: flex;
    z-index: 1;
    position: absolute;
-   font-family: "Keem";
+   /* font-family: "Keem"; */
+   font-family: auto;
    text-transform: uppercase;
-   font-size:2rem;
    left: 50%;
    top:80%;
    -webkit-transform: translate(-50%, 0%);
@@ -86,6 +85,46 @@ main {
            filter: url('#wave');
    color: rgba(100, 100, 100, 50);
    pointer-events: none;
+}
+
+
+.diction img {
+   width: 100%;
+   height: auto;
+}
+
+.diction > span {
+   line-height: 0.2;
+   font-size: 3rem;
+   animation: fading-loader 0.6s infinite alternate;
+}
+
+.diction > span:nth-child(2) {
+   animation-delay: 0.2s;
+}
+.diction > span:nth-child(3) {
+   animation-delay: 0.3s;
+}
+
+@keyframes fading-loader {
+   to {
+       opacity: 0.1;
+   }
+}
+
+.invert {
+   animation: invertCnv 0.4s linear;
+   animation-iteration-count: 10;
+}
+
+
+@keyframes invertCnv {
+   from {
+      filter: invert(0);
+   }
+   to {
+      filter: invert(1);
+   }
 }
 
 svg {
