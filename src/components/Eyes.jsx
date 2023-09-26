@@ -1,9 +1,34 @@
 import * as THREE from 'three';
  import React, { useRef, useState } from 'react'
  import { useFrame, extend } from "@react-three/fiber";
-import { useGLTF, shaderMaterial } from "@react-three/drei";
+import { useGLTF, MeshTransmissionMaterial, shaderMaterial } from "@react-three/drei";
 useGLTF.preload("/Eyes_Keem.glb");
 
+
+function FrostedGlass({children}) {
+   return (
+      <>
+         <mesh scale={[window.innerWidth, window.innerHeight, 1]} color={'#f0f0f0'} position={[0, 0, -5]}>
+         <circleGeometry args={[1, 1]} />
+         <MeshTransmissionMaterial 
+          samples={8}
+          resolution={512}
+          anisotropy={1}
+          thickness={0.1}
+          roughness={0.2}
+          toneMapped={true}
+          depthWrite={false} // Disable depth writing to render behind other objects
+          transparent // Enable transparency
+          opacity={0.7} // Adjust opacity as needed
+          renderOrder={1}
+         />
+         </mesh>
+        <group>
+          {children}
+        </group>
+      </>
+    )
+}
 
 const Eyes = ({ mousePosition, deviceOrientation }) => {
 
@@ -50,22 +75,21 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
          objRef.current.rotation.y += 0.03 * (targetRotationY - objRef.current.rotation.y);
        }
      });
-
-
      return (
       <>
-      <group dispose={null} ref={objRef} >
-       <mesh 
-         scale={objScale}
-         castShadow
-         receiveShadow
-         geometry={nodes.Volume_Mesher.geometry}
-         material={nodes.Volume_Mesher.material}
-         position={objPos}>
-            <meshStandardMaterial emissive={"grey"} color={"#5b5b5b"}/>
-      </mesh>
-       
-     </group>
+      <FrostedGlass>
+         <group dispose={null} >
+            <mesh ref={objRef}
+               scale={objScale}
+               castShadow
+               receiveShadow
+               geometry={nodes.Volume_Mesher.geometry}
+               material={nodes.Volume_Mesher.material}
+               position={objPos}>
+               <meshStandardMaterial emissive={"grey"} color={"#5b5b5b"}/>
+            </mesh>
+         </group>
+      </FrostedGlass>
       </>
       
      );

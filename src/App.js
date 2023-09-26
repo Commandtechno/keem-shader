@@ -1,8 +1,7 @@
 import './App.css'
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas, extend } from "@react-three/fiber";
-import { OrbitControls, Effects } from '@react-three/drei';
-import { BloomPass } from "three/examples/jsm/postprocessing/BloomPass";
+import { OrbitControls, Effects, Environment } from '@react-three/drei';
 import learning from './learning.svg'
 import { GlitchPass } from "./GlitchPass";
 import Eyes from './components/Eyes';
@@ -93,6 +92,7 @@ const App = () => {
    }};
 
 
+
   return (
     <>
       <div style={{ width: "100vw", height: "100%" }} onMouseMove={onMouseMove}>
@@ -114,20 +114,20 @@ const App = () => {
           style={{background: '#BABABA'}}>
           <Canvas camera={{ position: [0, 0, 300] }} >
                <Effects>
-  
                   <glitchPass attach="passes"/>
                </Effects>
-               <directionalLight intensity={0.05} />
-                <pointLight intensity={0.2} color="red" />
-                <fog attach="fog" args={['#000', 2, 1.5]} /> *
+               <ambientLight intensity={5} />
+               <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, -5]} castShadow />
+               {/* <Environment preset="city" background blur={2} /> */}
             <Suspense fallback={null}>     
+            
             {isMobile ? (
                <Eyes mousePosition={null} deviceOrientation={deviceOrientation} />
                ) : (
                <Eyes mousePosition={mousePosition} deviceOrientation={null} />
             )}
             </Suspense>
-            {/* <OrbitControls/> */}
+            <OrbitControls/>
           </Canvas>
         </main>
       </div>
