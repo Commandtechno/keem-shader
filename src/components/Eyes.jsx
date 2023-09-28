@@ -1,7 +1,8 @@
-import * as THREE from 'three';
- import React, { useRef, useState } from 'react'
+
+ import React, { useRef, useEffect, useState } from 'react'
  import { useFrame, useThree } from "@react-three/fiber";
-import { useGLTF, MeshTransmissionMaterial } from "@react-three/drei";
+import { useGLTF, MeshDistortMaterial, MeshTransmissionMaterial } from "@react-three/drei";
+import { gsap } from "gsap-trial"
 useGLTF.preload("/Eyes_Keem.glb");
 
 
@@ -9,7 +10,8 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
 
    const isMobile = window.innerWidth <= 576; 
    const objRef = useRef();
-   const shaderRef = useRef();
+   const glassRef = useRef()
+   const distortRef = useRef()
    const objScale = isMobile ? 0.58 : 0.01;
    const objPos = isMobile ? [30, 0, 0] : [0.5, 0, -1.5]
    const { nodes, materials } = useGLTF("/Eyes_Keem.glb");
@@ -19,7 +21,27 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
       const sensitivityX = 0.04; 
       const viewport = useThree(state => state.viewport)
 
+      useEffect(() => {
+         const intervalID = setInterval(() =>  {
+            gsap.to(distortRef.current, { distort: 0.4, speed:8, yoyo:true, duration: 0.1, repeat:5 })
+            gsap.to(glassRef.current, { roughness: 0.3, yoyo:true, duration: 0.1, repeat:5 })
+            gsap.to('main', { filter:'invert(1)', yoyo:true, duration: 0.1, repeat:5 })
+         }, 3000);
+       
+
+         return () => clearInterval(intervalID);
+     }, []);
+
      useFrame(({clock}) => {
+      // console.log(glassRef.current)
+      // Normal State
+      // glassRef.current.roughness = 0.4
+      // distortRef.current.distort = 0
+
+         // Glitch State
+      // glassRef.current.roughness = 0.3
+      // distortRef.current.distort = 0.4
+      
       if (mousePosition) {
        const targetRotationX = -mousePosition[1] * Math.PI / 4;
        const targetRotationY = mousePosition[0] * Math.PI / 12;
@@ -54,7 +76,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
       <group>
          <mesh position={[0.5, 0, 0.5]} scale={[viewport.width, viewport.height, 1]}>
             <planeGeometry args={[1, 1, 1]}/>
-            <MeshTransmissionMaterial samples={4} resolution={32} anisotropy={1} thickness={0.1} roughness={0.3} toneMapped={true} />
+            <MeshTransmissionMaterial ref={glassRef} samples={8} resolution={80} anisotropy={1} thickness={0.1} roughness={0.5} toneMapped={true} />
          </mesh>
       </group>
          <group dispose={null} >
@@ -65,7 +87,13 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
                geometry={nodes.Volume_Mesher.geometry}
                material={nodes.Volume_Mesher.material}
                position={objPos}>
-               <meshStandardMaterial emissive={"grey"} color={"#1f1e1e"}/>
+               <MeshDistortMaterial ref={distortRef}
+                  color="#5a5a5a"
+                  attach="material"
+                  distort={0} 
+                  speed={1} // Speed (default=1)
+                  roughness={1}
+               />
                {/* <shaderMaterial ref={shaderRef} attach="material" args={[ShaderMaterial]} /> */}
             </mesh>
          </group>

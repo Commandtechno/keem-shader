@@ -2,6 +2,7 @@ import './App.css'
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas, extend } from "@react-three/fiber";
 import { OrbitControls, Effects, Environment } from '@react-three/drei';
+import { gsap } from "gsap-trial"
 // import { GlitchPass } from './GlitchPass';
 import {ReactComponent as Learning} from './learning.svg';
 import Eyes from './components/Eyes';
@@ -16,6 +17,12 @@ const App = () => {
  
   const mainRef = useRef(null);
 
+//   useEffect(() => {
+//    const intervalID = setInterval(() =>  {
+//       gsap.to(mainRef.current, { filter:'invert(1)', yoyo:true, duration: 0.1, repeat:5 })
+//    }, 4000);
+//    return () => clearInterval(intervalID);
+// }, []);
 
   const onMouseMove = (event) => {
    if (!isMobile) {
