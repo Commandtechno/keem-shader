@@ -38,6 +38,7 @@ main {
    width: 100vw;
    height: 100vh;
    overflow: hidden;
+   /* filter: invert(1); */
    /* -webkit-filter: blur(5px) contrast(1);
    filter: blur(5px) contrast(1); */
 }
@@ -69,7 +70,7 @@ main {
 }
 
 .diction {
-   width: 8vw;
+   width: 12vw;
    display: flex;
    z-index: 1;
    position: absolute;
@@ -81,16 +82,17 @@ main {
    -webkit-transform: translate(-50%, 0%);
        -ms-transform: translate(-50%, 0%);
            transform: translate(-50%, 0%);
-   -webkit-filter: url('#wave');
-           filter: url('#wave');
-   color: rgba(100, 100, 100, 50);
+           color: rgba(131, 131, 131, 0.65);
    pointer-events: none;
 }
 
 
-.diction img {
+.diction  svg{
    width: 100%;
    height: auto;
+}
+.diction  svg > path{
+   animation: fading-loader 0.9s infinite alternate;
 }
 
 .diction > span {
@@ -99,11 +101,26 @@ main {
    animation: fading-loader 0.6s infinite alternate;
 }
 
-.diction > span:nth-child(2) {
+.diction > span:nth-child(2), .diction svg > path:nth-child(2) {
    animation-delay: 0.2s;
 }
-.diction > span:nth-child(3) {
+.diction > span:nth-child(3), .diction svg > path:nth-child(3) {
    animation-delay: 0.3s;
+}
+.diction svg > path:nth-child(4) {
+   animation-delay: 0.4s;
+}
+.diction svg > path:nth-child(5) {
+   animation-delay: 0.5s;
+}
+.diction svg > path:nth-child(6) {
+   animation-delay: 0.6s;
+}
+.diction svg > path:nth-child(7) {
+   animation-delay: 0.7s;
+}
+.diction svg > path:nth-child(8) {
+   animation-delay: 0.8s;
 }
 
 @keyframes fading-loader {
@@ -113,7 +130,7 @@ main {
 }
 
 .invert {
-   animation: invertCnv 0.4s linear;
+   /* animation: invertCnv 0.4s linear; */
    animation-iteration-count: 10;
 }
 
@@ -127,9 +144,7 @@ main {
    }
 }
 
-svg {
-   visibility: hidden;
-}
+
 
 @media (max-width: 576px) {
    /* Styles for phones */
