@@ -99,12 +99,12 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
      });
      return (
       <>
-      <group>
+      {/* <group>
          <mesh position={[0.5, 0, 0.5]} scale={[viewport.width, viewport.height, 1]}>
             <planeGeometry args={[1, 1, 1]}/>
             <MeshTransmissionMaterial ref={glassRef} samples={8} resolution={80} anisotropy={1} thickness={0.1} roughness={0.4} toneMapped={true} />
          </mesh>
-      </group>
+      </group> */}
          <group dispose={null} >
             <mesh ref={objRef}
                scale={objScale}

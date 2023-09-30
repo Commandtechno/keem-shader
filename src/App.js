@@ -34,7 +34,6 @@ const App = () => {
 
    const [anim, setAnim] = useState(false)
 
-
   return (
     <>
       <div style={{ width: "100vw", height: "100%" }} 
