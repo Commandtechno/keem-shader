@@ -29,35 +29,35 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
    //  gsap.to(distortRef.current, { distort: 0.4, speed: 1, yoyo:true, duration: 0.1, repeat: 5 })
    //  gsap.to('main', { filter:'invert(1) blur(15px)', yoyo:true, duration: 0.1, repeat:5 })
 
-   useEffect(() => {
-      // Create a MutationObserver
-      const observer = new MutationObserver((mutationsList) => {
-        for (const mutation of mutationsList) {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'anim') {
-            const hasAnimAttribute = document.body.hasAttribute('anim');
-          if (hasAnimAttribute) {
-            // 'anim' attribute is present
-            console.log("The 'anim' attribute is present in the <body> tag.");
-               gsap.to(distortRef.current, { distort: 0.4, speed: 1, yoyo:true, duration: 0.1, repeat: 5 })
-               gsap.to('main', { filter:'invert(1) blur(0px)', yoyo:true, duration: 0.1, repeat:5 })
-          } else {
-            // 'anim' attribute is not present
-            console.log("The 'anim' attribute is not present in the <body> tag.");
-            gsap.set(distortRef.current, { distort: 0 })
-            gsap.set('main', {filter: 'invert(0) blur(20px)' })
-          }
-          }
-        }
-      });
+   // useEffect(() => {
+   //    // Create a MutationObserver
+   //    const observer = new MutationObserver((mutationsList) => {
+   //      for (const mutation of mutationsList) {
+   //        if (mutation.type === 'attributes' && mutation.attributeName === 'anim') {
+   //          const hasAnimAttribute = document.body.hasAttribute('anim');
+   //        if (hasAnimAttribute) {
+   //          // 'anim' attribute is present
+   //          console.log("The 'anim' attribute is present in the <body> tag.");
+   //             gsap.to(distortRef.current, { distort: 0.4, speed: 1, yoyo:true, duration: 0.1, repeat: 5 })
+   //             gsap.to('main', { filter:'invert(1) blur(0px)', yoyo:true, duration: 0.1, repeat:5 })
+   //        } else {
+   //          // 'anim' attribute is not present
+   //          console.log("The 'anim' attribute is not present in the <body> tag.");
+   //          gsap.set(distortRef.current, { distort: 0 })
+   //          gsap.set('main', {filter: 'invert(0) blur(20px)' })
+   //        }
+   //        }
+   //      }
+   //    });
   
-      // Start observing the <body> tag for attribute changes
-      observer.observe(document.body, { attributes: true, attributeFilter: ['anim'] });
+   //    // Start observing the <body> tag for attribute changes
+   //    observer.observe(document.body, { attributes: true, attributeFilter: ['anim'] });
   
-      // Clean up the observer when the component unmounts
-      return () => {
-        observer.disconnect();
-      };
-    }, []);
+   //    // Clean up the observer when the component unmounts
+   //    return () => {
+   //      observer.disconnect();
+   //    };
+   //  }, []);
 
      useFrame(({clock}) => {
 
