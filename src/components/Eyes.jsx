@@ -22,12 +22,19 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
    const sensitivityX = 0.04; 
    const viewport = useThree(state => state.viewport)
 
-   const [glitch, setGlitch] = useState(false);
+   useEffect(() => {
+      const intervalId = setInterval(() => {
+        // This function will be called every 3 seconds
+         gsap.to(distortRef.current, { distort: 0.4, speed: 1, yoyo:true, duration: 0.1, repeat: 5 })
+         gsap.to('main', { filter:'invert(1) contrast(10)', yoyo:true, duration: 0.1, repeat:5 })
+      }, 3000); // 3000 milliseconds = 3 seconds
+  
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, []);
 
-   
 
-   //  gsap.to(distortRef.current, { distort: 0.4, speed: 1, yoyo:true, duration: 0.1, repeat: 5 })
-   //  gsap.to('main', { filter:'invert(1) blur(15px)', yoyo:true, duration: 0.1, repeat:5 })
 
    // useEffect(() => {
    //    // Create a MutationObserver
@@ -92,12 +99,12 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
      });
      return (
       <>
-      {/* <group>
+      <group>
          <mesh position={[0.5, 0, 0.5]} scale={[viewport.width, viewport.height, 1]}>
             <planeGeometry args={[1, 1, 1]}/>
-            <MeshTransmissionMaterial ref={glassRef} samples={8} resolution={80} anisotropy={1} thickness={0.1} roughness={0.5} toneMapped={true} />
+            <MeshTransmissionMaterial ref={glassRef} samples={8} resolution={80} anisotropy={1} thickness={0.1} roughness={0.4} toneMapped={true} />
          </mesh>
-      </group> */}
+      </group>
          <group dispose={null} >
             <mesh ref={objRef}
                scale={objScale}

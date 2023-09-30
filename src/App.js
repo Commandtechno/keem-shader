@@ -49,11 +49,11 @@ const App = () => {
           ref={mainRef}
           style={{background: '#f4f4f4'}}>
           <Canvas camera={{ position: [0, -0.2, 1.3] }} >
-               <Effects>
+               {/* <Effects>
                   <glitchPass attachArray="passes"/>
-               </Effects>
+               </Effects> */}
                {/* <ambientLight intensity={0.1} /> */}
-               {/* <Environment files="./img/environment.hdr" background blur={0.5} /> */}
+               <Environment files="./img/environment.hdr" background blur={0.5} />
                <Suspense fallback={null}>     
                   <Eyes mousePosition={mousePosition} deviceOrientation={null} />
                </Suspense>
