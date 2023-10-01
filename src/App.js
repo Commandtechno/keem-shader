@@ -40,6 +40,7 @@ const App = () => {
       onMouseMove={onMouseMove}>
          <div className='diction'>
          <Learning/>
+         {/* <p>LEARNING</p> */}
          <span>.</span>
          <span>.</span>
          <span>.</span>
@@ -47,7 +48,7 @@ const App = () => {
         <main
           ref={mainRef}
           style={{background: '#f4f4f4'}}>
-          <Canvas camera={{ position: [0, -0.2, 1.3] }} >
+          <Canvas camera={{ position: [0, 0, 1.5] }} >
                {/* <Effects>
                   <glitchPass attachArray="passes"/>
                </Effects> */}

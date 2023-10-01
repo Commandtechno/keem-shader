@@ -23,10 +23,12 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
    const viewport = useThree(state => state.viewport)
 
    useEffect(() => {
+
       const intervalId = setInterval(() => {
+         const randomNumber = parseFloat((0.2 + Math.random() * 0.3).toFixed(1));
         // This function will be called every 3 seconds
-         gsap.to(distortRef.current, { distort: 0.4, speed: 1, yoyo:true, duration: 0.1, repeat: 5 })
-         gsap.to('main', { filter:'invert(1) contrast(10)', yoyo:true, duration: 0.1, repeat:5 })
+         gsap.to(distortRef.current, { distort: randomNumber, speed: 1, yoyo:true, duration: 0.1, repeat: 5 })
+         gsap.to('main', { filter:'invert(1) blur(0px) contrast(2) grayscale(0)', yoyo:true, duration: 0.1, repeat:5 })
       }, 3000); // 3000 milliseconds = 3 seconds
   
       return () => {
@@ -46,12 +48,13 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
    //          // 'anim' attribute is present
    //          console.log("The 'anim' attribute is present in the <body> tag.");
    //             gsap.to(distortRef.current, { distort: 0.4, speed: 1, yoyo:true, duration: 0.1, repeat: 5 })
-   //             gsap.to('main', { filter:'invert(1) blur(0px)', yoyo:true, duration: 0.1, repeat:5 })
+   //             gsap.to('main', { filter:'invert(1) blur(5px) contrast(10) grayscale(1)', yoyo:true, duration: 0.1, repeat:5 })
+   //             // gsap.to('main', { filter:'invert(1) blur(0px) contrast(10)', yoyo:true, duration: 0.1, repeat:5 })
    //        } else {
    //          // 'anim' attribute is not present
    //          console.log("The 'anim' attribute is not present in the <body> tag.");
    //          gsap.set(distortRef.current, { distort: 0 })
-   //          gsap.set('main', {filter: 'invert(0) blur(20px)' })
+   //          gsap.set('main', {filter: 'invert(0) blur(20px) contrast(10) grayscale(1)' })
    //        }
    //        }
    //      }
@@ -102,7 +105,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
       {/* <group>
          <mesh position={[0.5, 0, 0.5]} scale={[viewport.width, viewport.height, 1]}>
             <planeGeometry args={[1, 1, 1]}/>
-            <MeshTransmissionMaterial ref={glassRef} samples={8} resolution={80} anisotropy={1} thickness={0.1} roughness={0.4} toneMapped={true} />
+            <MeshTransmissionMaterial ref={glassRef} samples={8} resolution={80} anisotropy={1} thickness={0.04} roughness={0.8} toneMapped={true} />
          </mesh>
       </group> */}
          <group dispose={null} >
@@ -113,6 +116,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
                geometry={nodes.Volume_Mesher.geometry}
                material={nodes.Volume_Mesher.material}
                position={objPos}>
+                  {/* <meshStandardMaterial color="#000000"/> */}
                <MeshDistortMaterial ref={distortRef}
                   color="#000000"
                   attach="material"

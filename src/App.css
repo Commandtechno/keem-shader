@@ -40,8 +40,8 @@ main {
    overflow: hidden;
    /* filter: invert(1); */
    /* -webkit-filter: blur(5px) contrast(1);*/
-   /* filter: blur(20px);  */
-   filter: contrast(2);
+   filter: blur(10px) contrast(1) grayscale(1); 
+   /* filter: contrast(2); */
 }
 
 .enter {
@@ -85,7 +85,10 @@ main {
    color: rgb(52, 52, 52);
    pointer-events: none;
 }
-
+.diction  p{
+   fill: rgb(0, 0, 0);
+   font-family: "Keem";
+}
 
 .diction  svg{
    fill: rgb(52, 52, 52);
@@ -97,6 +100,7 @@ main {
 }
 
 .diction > span {
+   /* font-family: "Keem"; */
    line-height: 0.7;
    font-size: 2rem;
    animation: fading-loader 0.9s infinite alternate;
