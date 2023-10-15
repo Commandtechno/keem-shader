@@ -30,7 +30,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
                    if (hasAnimAttribute) {
                      console.log(matRef.current.emissive)
                       gsap.set(matRef.current.emissive, { r: 0.29, g: 0.29, b: 0.29 });
-                      gsap.to('main', { backgroundColor: "grey" , 
+                      gsap.to('main', { backgroundColor: "darkgrey" , 
                       yoyo:true, duration: 0.1, repeat: 5, onComplete: () => {
                         gsap.set(matRef.current.emissive, { r: 0.1, g: 0.1, b: 0.1 });
                       }} )
