@@ -30,9 +30,10 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
                    if (hasAnimAttribute) {
                      console.log(matRef.current.emissive)
                       gsap.set(matRef.current.emissive, { r: 0.29, g: 0.29, b: 0.29 });
-                         gsap.to('main', { filter:'invert(1) contrast(1) blur(20px)', yoyo:true, duration: 0.1, repeat: 5, onComplete: () => {
-                           gsap.set(matRef.current.emissive, { r: 0.6, g: 0.6, b: 0.6 });
-                         } })
+                      gsap.to('main', { backgroundColor: "grey" , 
+                      yoyo:true, duration: 0.1, repeat: 5, onComplete: () => {
+                        gsap.set(matRef.current.emissive, { r: 0.1, g: 0.1, b: 0.1 });
+                      }} )
                    } else {
                      //  gsap.set('main', {filter: 'invert(0) contrast(1) blur(10px)' })
                    }
@@ -89,7 +90,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
          geometry={nodes.Volume_Mesher.geometry}
          material={nodes.Volume_Mesher.material}
          position={objPos}>
-            <meshStandardMaterial ref={matRef} emissive={'rgb(84, 84, 84)'} color={"#1a1a1a"}/>
+            <meshStandardMaterial ref={matRef} emissive={'rgb(22, 22, 22)'} color={"#1a1a1a"}/>
       </mesh>
        
      </group>

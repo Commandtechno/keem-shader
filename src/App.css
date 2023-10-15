@@ -12,7 +12,7 @@
 
  body {
    overflow: hidden;
-   filter: invert(1) contrast(5);
+   filter: invert(1) contrast(2);
  }
 
 main {
