@@ -7,27 +7,7 @@
 
 @font-face {
    font-family: Keem;
-   src: url(/public/fonts/kEEMbold.ttf);
- }
- @font-face {
-   font-family: Redaction;
-   src: url(/public/fonts/Redaction_100-Bold.woff2);
- }
- @font-face {
-   font-family: FA1;
-   src: url(/public/fonts/FA-1-Regular.otf);
- }
- @font-face {
-   font-family: Nacelle;
-   src: url(/public/fonts/Nacelle-Heavy.otf);
- }
- @font-face {
-   font-family: Ferrum;
-   src: url(/public/fonts/ferrum.otf);
- }
- @font-face {
-   font-family: Tender;
-   src: url(/public/fonts/Tenderness-Regular.otf);
+   src: url(/public/fonts/KEEM.ttf);
  }
 
  body {
@@ -74,8 +54,8 @@ main {
    display: flex;
    z-index: 1;
    position: absolute;
-   /* font-family: "Keem"; */
-   font-family: auto;
+   font-family: "Keem";
+   /* font-family: auto; */
    text-transform: uppercase;
    left: 50%;
    top:80%;

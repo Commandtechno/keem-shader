@@ -1,24 +1,51 @@
 import * as THREE from 'three';
- import React, { useRef, useState } from 'react'
+ import React, { useRef, useEffect } from 'react'
+ import { gsap } from "gsap-trial"
  import { useFrame, extend } from "@react-three/fiber";
 import { useGLTF, shaderMaterial } from "@react-three/drei";
 useGLTF.preload("/Eyes_Keem.glb");
+
 
 
 const Eyes = ({ mousePosition, deviceOrientation }) => {
 
    const isMobile = window.innerWidth <= 576; 
    const objRef = useRef();
-   const shaderRef = useRef();
+   const matRef = useRef();
    const objScale = isMobile ? 0.58 : 1;
    const objPos = isMobile ? [30, 0, 0] : [45.463, -29.926, 22.715]
    const { nodes, materials } = useGLTF("/Eyes_Keem.glb");
-  
      const phoneAngle = 90; // Set the initial beta value you want
       const sensitivityY = 0.03; 
       const sensitivityX = 0.04; 
 
-     useFrame(({clock}) => {
+
+
+      useEffect(() => {
+            // Create a MutationObserver
+            const observer = new MutationObserver((mutationsList) => {
+               for (const mutation of mutationsList) {
+                 if (mutation.type === 'attributes' && mutation.attributeName === 'anim') {
+                   const hasAnimAttribute = document.body.hasAttribute('anim');
+                   if (hasAnimAttribute) {
+                     console.log(matRef.current.emissive)
+                      gsap.set(matRef.current.emissive, { r: 0.29, g: 0.29, b: 0.29 });
+                         gsap.to('main', { filter:'invert(1) contrast(1) blur(20px)', yoyo:true, duration: 0.1, repeat: 5, onComplete: () => {
+                           gsap.set(matRef.current.emissive, { r: 0.6, g: 0.6, b: 0.6 });
+                         } })
+                   } else {
+                     //  gsap.set('main', {filter: 'invert(0) contrast(1) blur(10px)' })
+                   }
+                 }
+               }
+             });
+             observer.observe(document.body, { attributes: true, attributeFilter: ['anim'] });
+             return () => {
+               observer.disconnect();
+             };
+           }, []);
+
+     useFrame(() => {
 
       // shaderRef.current.uTime = clock.getElapsedTime() * 0.5;
 
@@ -62,7 +89,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
          geometry={nodes.Volume_Mesher.geometry}
          material={nodes.Volume_Mesher.material}
          position={objPos}>
-            <meshStandardMaterial emissive={"grey"} color={"#1a1a1a"}/>
+            <meshStandardMaterial ref={matRef} emissive={'rgb(84, 84, 84)'} color={"#1a1a1a"}/>
       </mesh>
        
      </group>
