@@ -104,22 +104,15 @@ const App = () => {
         ))}
       </p> */}
          <div className='diction'>
-         <img src={learning} alt="learning" />
-         <span>.</span>
-         <span>.</span>
-         <span>.</span>
+             <p>LEARNING</p>
          </div>
         <main
           ref={mainRef}
-          style={{background: '#BABABA'}}>
+          style={{background: '#fAfffA'}}>
           <Canvas camera={{ position: [0, 0, 300] }} >
                <Effects>
-  
                   <glitchPass attach="passes"/>
                </Effects>
-               <directionalLight intensity={0.05} />
-                <pointLight intensity={0.2} color="red" />
-                <fog attach="fog" args={['#000', 2, 1.5]} /> *
             <Suspense fallback={null}>     
             {isMobile ? (
                <Eyes mousePosition={null} deviceOrientation={deviceOrientation} />

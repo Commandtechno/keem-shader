@@ -65,11 +65,11 @@ class GlitchPass extends Pass {
 			this.uniforms[ 'distortion_y' ].value = MathUtils.randFloat( 0, 1 );
 			this.uniforms[ 'seed_x' ].value = MathUtils.randFloat( - 0.3, 0.3 );
 			this.uniforms[ 'seed_y' ].value = MathUtils.randFloat( - 0.3, 0.3 );
-         const main = document.querySelector('main');
-         main.classList.add('invert')
-         setTimeout(() => {
-            main.classList.remove('invert')
-         }, 1000)
+         // const main = document.querySelector('main');
+         // main.classList.add('invert')
+         // setTimeout(() => {
+         //    main.classList.remove('invert')
+         // }, 1000)
 		} else if ( this.goWild == false ) {
 
 			this.uniforms[ 'byp' ].value = 1;

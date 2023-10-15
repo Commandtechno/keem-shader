@@ -62,7 +62,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
          geometry={nodes.Volume_Mesher.geometry}
          material={nodes.Volume_Mesher.material}
          position={objPos}>
-            <meshStandardMaterial emissive={"grey"} color={"#5b5b5b"}/>
+            <meshStandardMaterial emissive={"grey"} color={"#1a1a1a"}/>
       </mesh>
        
      </group>
