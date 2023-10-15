@@ -71,7 +71,7 @@ class GlitchPass extends Pass {
          } 
          setTimeout(() => {
             document.body.removeAttribute('anim');
-         }, 2000)
+         }, 1500)
 
 		} else if ( this.goWild == false ) {
 

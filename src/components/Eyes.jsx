@@ -1,7 +1,7 @@
 
  import React, { useRef, useEffect, useState } from 'react'
  import { extend, useFrame, useThree } from "@react-three/fiber";
-import { useGLTF, MeshDistortMaterial, MeshTransmissionMaterial } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { GlitchPass } from '../GlitchPass';
 import { gsap } from "gsap-trial"
 useGLTF.preload("/Eyes_Keem.glb");
@@ -12,64 +12,38 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
 
    const isMobile = window.innerWidth <= 576; 
    const objRef = useRef();
-   const glassRef = useRef()
-   const distortRef = useRef()
-   const objScale = isMobile ? 0.58 : 0.01;
-   const objPos = isMobile ? [30, 0, 0] : [0.5, 0, -1.5]
+   const matRef = useRef()
+   const objScale = isMobile ? 0.58 : 0.011;
+   const objPos = isMobile ? [30, 0, 0] : [0.5, -0.3, -1.5]
    const { nodes, materials } = useGLTF("/Eyes_Keem.glb");
    const phoneAngle = 90;
    const sensitivityY = 0.03; 
    const sensitivityX = 0.04; 
-   const viewport = useThree(state => state.viewport)
 
    useEffect(() => {
-
-      const intervalId = setInterval(() => {
-         const randomNumber = parseFloat((0.2 + Math.random() * 0.3).toFixed(1));
-        // This function will be called every 3 seconds
-         gsap.to(distortRef.current, { distort: randomNumber, speed: 1, yoyo:true, duration: 0.1, repeat: 5 })
-         gsap.to('main', { filter:'invert(1) blur(0px) contrast(2) grayscale(0)', yoyo:true, duration: 0.1, repeat:5 })
-      }, 3000); // 3000 milliseconds = 3 seconds
-  
+      // Create a MutationObserver
+      const observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'anim') {
+            const hasAnimAttribute = document.body.hasAttribute('anim');
+            if (hasAnimAttribute) {
+               // gsap.set(matRef.current.color, { r: 0, g: 0.8, b: 0.8 });
+                  gsap.to('main', { filter:'invert(1) contrast(1) blur(20px)', yoyo:true, duration: 0.1, repeat: 5, onComplete: () => {
+                     // gsap.set(matRef.current.color, { r: 1, g: 1, b: 1 });
+                  } })
+            } else {
+               gsap.set('main', {filter: 'invert(0) contrast(1) blur(10px)' })
+            }
+          }
+        }
+      });
+      observer.observe(document.body, { attributes: true, attributeFilter: ['anim'] });
       return () => {
-        clearInterval(intervalId);
+        observer.disconnect();
       };
     }, []);
 
-
-
-   // useEffect(() => {
-   //    // Create a MutationObserver
-   //    const observer = new MutationObserver((mutationsList) => {
-   //      for (const mutation of mutationsList) {
-   //        if (mutation.type === 'attributes' && mutation.attributeName === 'anim') {
-   //          const hasAnimAttribute = document.body.hasAttribute('anim');
-   //        if (hasAnimAttribute) {
-   //          // 'anim' attribute is present
-   //          console.log("The 'anim' attribute is present in the <body> tag.");
-   //             gsap.to(distortRef.current, { distort: 0.4, speed: 1, yoyo:true, duration: 0.1, repeat: 5 })
-   //             gsap.to('main', { filter:'invert(1) blur(5px) contrast(10) grayscale(1)', yoyo:true, duration: 0.1, repeat:5 })
-   //             // gsap.to('main', { filter:'invert(1) blur(0px) contrast(10)', yoyo:true, duration: 0.1, repeat:5 })
-   //        } else {
-   //          // 'anim' attribute is not present
-   //          console.log("The 'anim' attribute is not present in the <body> tag.");
-   //          gsap.set(distortRef.current, { distort: 0 })
-   //          gsap.set('main', {filter: 'invert(0) blur(20px) contrast(10) grayscale(1)' })
-   //        }
-   //        }
-   //      }
-   //    });
-  
-   //    // Start observing the <body> tag for attribute changes
-   //    observer.observe(document.body, { attributes: true, attributeFilter: ['anim'] });
-  
-   //    // Clean up the observer when the component unmounts
-   //    return () => {
-   //      observer.disconnect();
-   //    };
-   //  }, []);
-
-     useFrame(({clock}) => {
+     useFrame(() => {
 
       if (mousePosition) {
        const targetRotationX = -mousePosition[1] * Math.PI / 4;
@@ -102,12 +76,6 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
      });
      return (
       <>
-      {/* <group>
-         <mesh position={[0.5, 0, 0.5]} scale={[viewport.width, viewport.height, 1]}>
-            <planeGeometry args={[1, 1, 1]}/>
-            <MeshTransmissionMaterial ref={glassRef} samples={8} resolution={80} anisotropy={1} thickness={0.04} roughness={0.8} toneMapped={true} />
-         </mesh>
-      </group> */}
          <group dispose={null} >
             <mesh ref={objRef}
                scale={objScale}
@@ -116,14 +84,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
                geometry={nodes.Volume_Mesher.geometry}
                material={nodes.Volume_Mesher.material}
                position={objPos}>
-                  {/* <meshStandardMaterial color="#000000"/> */}
-               <MeshDistortMaterial ref={distortRef}
-                  color="#000000"
-                  attach="material"
-                  distort={0} 
-                  speed={1} // Speed (default=1)
-                  roughness={4}
-               />
+             <meshBasicMaterial ref={matRef} color={0xf0f0f0} attach="material" />
             </mesh>
          </group>
       </>

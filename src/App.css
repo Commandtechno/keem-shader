@@ -9,39 +9,20 @@
    font-family: Keem;
    src: url(/public/fonts/kEEMbold.ttf);
  }
- @font-face {
-   font-family: Redaction;
-   src: url(/public/fonts/Redaction_100-Bold.woff2);
- }
- @font-face {
-   font-family: FA1;
-   src: url(/public/fonts/FA-1-Regular.otf);
- }
- @font-face {
-   font-family: Nacelle;
-   src: url(/public/fonts/Nacelle-Heavy.otf);
- }
- @font-face {
-   font-family: Ferrum;
-   src: url(/public/fonts/ferrum.otf);
- }
- @font-face {
-   font-family: Tender;
-   src: url(/public/fonts/Tenderness-Regular.otf);
- }
 
  body {
    overflow: hidden;
+   /* filter: hue-rotate(50deg); */
  }
 
 main {
+   background-color: black;
    width: 100vw;
    height: 100vh;
    overflow: hidden;
-   /* filter: invert(1); */
-   /* -webkit-filter: blur(5px) contrast(1);*/
-   filter: blur(10px) contrast(1) grayscale(1); 
-   /* filter: contrast(2); */
+   filter: contrast(1); 
+   
+
 }
 
 .enter {
@@ -60,7 +41,7 @@ main {
        -ms-flex-align: center;
            align-items: center;
    background-color: #f4f4f4;
-   color: rgba(90, 90, 90, 20);
+   color: rgba(250, 290, 290, 20);
    z-index: 10 !important;
    display: none;
 }
@@ -82,53 +63,12 @@ main {
    -webkit-transform: translate(-50%, 0%);
        -ms-transform: translate(-50%, 0%);
            transform: translate(-50%, 0%);
-   color: rgb(52, 52, 52);
+           color: rgba(250, 290, 290, 20);
    pointer-events: none;
 }
-.diction  p{
-   fill: rgb(0, 0, 0);
+.diction p{
+   fill: rgb(255, 255, 255);
    font-family: "Keem";
-}
-
-.diction  svg{
-   fill: rgb(52, 52, 52);
-   width: 100%;
-   height: auto;
-}
-.diction  svg > path{
-   animation: fading-loader 0.9s infinite alternate;
-}
-
-.diction > span {
-   /* font-family: "Keem"; */
-   line-height: 0.7;
-   font-size: 2rem;
-   animation: fading-loader 0.9s infinite alternate;
-}
-
-.diction > span:nth-child(2), .diction svg > path:nth-child(2) {
-   animation-delay: 0.2s;
-}
-.diction > span:nth-child(3), .diction svg > path:nth-child(3) {
-   animation-delay: 0.3s;
-}
-.diction svg > path:nth-child(4) {
-   animation-delay: 0.4s;
-}
-.diction svg > path:nth-child(5) {
-   animation-delay: 0.5s;
-}
-.diction svg > path:nth-child(6) {
-   animation-delay: 0.6s;
-}
-/* i */
-.diction svg > path:nth-child(7) {
-   animation-delay: 0.7s;
-}
-
-/* n */
-.diction svg > path:nth-child(8) {
-   animation-delay: 0.8s;
 }
 
 @keyframes fading-loader {
@@ -137,28 +77,11 @@ main {
    }
 }
 
-.invert {
-   animation: invertCnv 0.4s linear;
-   animation-iteration-count: 10;
-}
-
-
-@keyframes invertCnv {
-   from {
-      filter: invert(0);
-   }
-   to {
-      filter: invert(1);
-   }
-}
-
-
 
 @media (max-width: 576px) {
-   /* Styles for phones */
+
    .diction, .enter {
       font-size: 0.8rem;
-      /* display: none; */
    }
 
    .diction {

@@ -3,12 +3,9 @@ import React, { useRef, useState, useEffect } from "react";
 import { Canvas, extend } from "@react-three/fiber";
 import { OrbitControls, Effects, Environment } from '@react-three/drei';
 import { gsap } from "gsap-trial"
-// import { GlitchPass } from './GlitchPass';
 import {ReactComponent as Learning} from './learning.svg';
 import Eyes from './components/Eyes';
 import { Suspense } from "react";
-
-// extend({ GlitchPass })
 
 const App = () => {
 
@@ -16,13 +13,6 @@ const App = () => {
   const [mousePosition, setMousePosition] = useState([0, 0]);
  
   const mainRef = useRef(null);
-
-//   useEffect(() => {
-//    const intervalID = setInterval(() =>  {
-//       gsap.to(mainRef.current, { filter:'invert(1)', yoyo:true, duration: 0.1, repeat:5 })
-//    }, 4000);
-//    return () => clearInterval(intervalID);
-// }, []);
 
   const onMouseMove = (event) => {
    if (!isMobile) {
@@ -32,32 +22,21 @@ const App = () => {
    setMousePosition([mouseX, mouseY]);
    }};
 
-   const [anim, setAnim] = useState(false)
-
   return (
     <>
       <div style={{ width: "100vw", height: "100%" }} 
       onMouseMove={onMouseMove}>
-         <div className='diction'>
-         <Learning/>
-         {/* <p>LEARNING</p> */}
-         <span>.</span>
-         <span>.</span>
-         <span>.</span>
+         <div className='diction'>      
+         <p>LEARNING</p>
          </div>
-        <main
-          ref={mainRef}
-          style={{background: '#f4f4f4'}}>
+        <main ref={mainRef}>
           <Canvas camera={{ position: [0, 0, 1.5] }} >
-               {/* <Effects>
+               <Effects>
                   <glitchPass attachArray="passes"/>
-               </Effects> */}
-               {/* <ambientLight intensity={0.1} /> */}
-               <Environment files="./img/environment.hdr" background blur={0.5} />
+               </Effects>
                <Suspense fallback={null}>     
                   <Eyes mousePosition={mousePosition} deviceOrientation={null} />
                </Suspense>
-            {/* <OrbitControls/> */}
           </Canvas>
         </main>
       </div>
