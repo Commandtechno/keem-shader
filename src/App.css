@@ -12,7 +12,7 @@
 
  body {
    overflow: hidden;
-   filter: invert(1) contrast(2);
+   filter: invert(1) contrast(5);
  }
 
 main {
@@ -26,7 +26,7 @@ main {
 .enter {
    position: absolute;
    width: 100vw;
-   height: 90vh;
+   height: 100%;
    font-family: "Keem";
    text-transform: uppercase;
    display: -webkit-box;
@@ -39,78 +39,34 @@ main {
        -ms-flex-align: center;
            align-items: center;
    background-color: #f4f4f4;
-   color: rgba(90, 90, 90, 20);
+   color: rgba(65,65,65);
    z-index: 10 !important;
-   display: none;
+   /* display: none; */
 }
 
 
 .enter p:hover {
-   opacity: 0.5;
+   color: rgba(25,25,25);
+   cursor: pointer;
 }
 
 .diction {
-   width: 8vw;
-   display: flex;
    z-index: 1;
    position: absolute;
-   font-family: "Keem";
-   /* font-family: auto; */
-   text-transform: uppercase;
    left: 50%;
    top:80%;
    -webkit-transform: translate(-50%, 0%);
        -ms-transform: translate(-50%, 0%);
            transform: translate(-50%, 0%);
-   -webkit-filter: url('#wave');
-           filter: url('#wave');
-   color: rgba(100, 100, 100, 50);
    pointer-events: none;
 }
 
-
-.diction img {
-   width: 100%;
-   height: auto;
+.diction p {
+   color: rgb(91, 91, 91);
+   font-family: "Keem";
+   text-transform: uppercase;
 }
 
-.diction > span {
-   line-height: 0.2;
-   font-size: 3rem;
-   animation: fading-loader 0.6s infinite alternate;
-}
-
-.diction > span:nth-child(2) {
-   animation-delay: 0.2s;
-}
-.diction > span:nth-child(3) {
-   animation-delay: 0.3s;
-}
-
-@keyframes fading-loader {
-   to {
-       opacity: 0.1;
-   }
-}
-
-.invert {
-   animation: invertCnv 0.4s linear;
-   animation-iteration-count: 10;
-}
-
-
-@keyframes invertCnv {
-   from {
-      filter: invert(0);
-   }
-   to {
-      filter: invert(1);
-   }
-}
-
-svg {
-   visibility: hidden;
-}
 
 @media (max-width: 576px) {
    /* Styles for phones */
@@ -119,12 +75,4 @@ svg {
       /* display: none; */
    }
 
-   .diction {
-      /* top: 80%; */
-   }
-
-   main { 
-      /* -webkit-filter: blur(1px) contrast(1); 
-              filter: blur(1px) contrast(1); */
-   }
  }

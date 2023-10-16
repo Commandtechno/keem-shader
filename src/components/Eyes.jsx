@@ -1,6 +1,6 @@
 import * as THREE from 'three';
  import React, { useRef, useEffect } from 'react'
- import { gsap } from "gsap-trial"
+ import { gsap } from "gsap"
  import { useFrame, extend } from "@react-three/fiber";
 import { useGLTF, shaderMaterial } from "@react-three/drei";
 useGLTF.preload("/Eyes_Keem.glb");
@@ -19,8 +19,6 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
       const sensitivityY = 0.03; 
       const sensitivityX = 0.04; 
 
-
-
       useEffect(() => {
             // Create a MutationObserver
             const observer = new MutationObserver((mutationsList) => {
@@ -28,14 +26,14 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
                  if (mutation.type === 'attributes' && mutation.attributeName === 'anim') {
                    const hasAnimAttribute = document.body.hasAttribute('anim');
                    if (hasAnimAttribute) {
-                     console.log(matRef.current.emissive)
-                      gsap.set(matRef.current.emissive, { r: 0.29, g: 0.29, b: 0.29 });
+                     // console.log(matRef.current.emissive)
+                      gsap.set(matRef.current.emissive, { r: 0.2, g: 0.2, b: 0.2 });
                       gsap.to('main', { backgroundColor: "darkgrey" , 
                       yoyo:true, duration: 0.1, repeat: 5, onComplete: () => {
-                        gsap.set(matRef.current.emissive, { r: 0.1, g: 0.1, b: 0.1 });
+                        gsap.set(matRef.current.emissive, { r: 0.15, g: 0.15, b: 0.15 });
                       }} )
                    } else {
-                     //  gsap.set('main', {filter: 'invert(0) contrast(1) blur(10px)' })
+                   
                    }
                  }
                }
@@ -90,7 +88,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
          geometry={nodes.Volume_Mesher.geometry}
          material={nodes.Volume_Mesher.material}
          position={objPos}>
-            <meshStandardMaterial ref={matRef} emissive={'rgb(22, 22, 22)'} color={"#1a1a1a"}/>
+            <meshStandardMaterial ref={matRef} color={"rgb(65,65,65)"}/>
       </mesh>
        
      </group>
