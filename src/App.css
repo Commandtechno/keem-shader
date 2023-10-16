@@ -7,20 +7,18 @@
 
 @font-face {
    font-family: Keem;
-   src: url(/public/fonts/KEEM.ttf);
+   src: url(/public/assets/KEEM.ttf);
  }
 
  body {
    overflow: hidden;
-   filter: invert(1) contrast(5);
+   filter: invert(1) contrast(10);
  }
 
 main {
    width: 100vw;
    height: 100vh;
    overflow: hidden;
-   /* -webkit-filter: blur(5px) contrast(1);
-   filter: blur(5px) contrast(1); */
 }
 
 .enter {
@@ -41,9 +39,28 @@ main {
    background-color: #f4f4f4;
    color: rgba(65,65,65);
    z-index: 10 !important;
-   /* display: none; */
+   
 }
 
+.notch {
+   position: absolute;
+   width: 100vw;
+   height: 100%;
+   top: 0;
+   left: 0;
+   pointer-events: none;
+}
+
+.notch svg {
+   width: 20vw;
+   height: auto;
+   margin-top: -5.1%;
+   margin-left: 75%;
+}
+
+canvas {
+ filter: saturate(0.5) hue-rotate(5deg)
+}
 
 .enter p:hover {
    color: rgba(25,25,25);
@@ -69,10 +86,15 @@ main {
 
 
 @media (max-width: 576px) {
-   /* Styles for phones */
    .diction, .enter {
       font-size: 0.8rem;
       /* display: none; */
+   }
+
+   .notch svg {
+      width: 40vw;
+      margin-top: -10%;
+      margin-left: 65%;
    }
 
  }

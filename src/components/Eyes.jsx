@@ -1,8 +1,8 @@
-import * as THREE from 'three';
+
  import React, { useRef, useEffect } from 'react'
  import { gsap } from "gsap"
- import { useFrame, extend } from "@react-three/fiber";
-import { useGLTF, shaderMaterial } from "@react-three/drei";
+ import { useFrame } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 useGLTF.preload("/Eyes_Keem.glb");
 
 
@@ -14,7 +14,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
    const matRef = useRef();
    const objScale = isMobile ? 0.58 : 1;
    const objPos = isMobile ? [30, 0, 0] : [45.463, -29.926, 22.715]
-   const { nodes, materials } = useGLTF("/Eyes_Keem.glb");
+   const { nodes } = useGLTF("/Eyes_Keem.glb");
      const phoneAngle = 90; // Set the initial beta value you want
       const sensitivityY = 0.03; 
       const sensitivityX = 0.04; 
@@ -45,8 +45,6 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
            }, []);
 
      useFrame(() => {
-
-      // shaderRef.current.uTime = clock.getElapsedTime() * 0.5;
 
       if (mousePosition) {
        const targetRotationX = -mousePosition[1] * Math.PI / 4;
