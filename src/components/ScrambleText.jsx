@@ -13,7 +13,7 @@ const ScrambleText = ({ enter, hasPermission }) => {
 
    
    useEffect(() => {
-      if (enter || hasPermission) {
+      if (enter) {
     
             shuffle({ 
                text: targetString, 
@@ -48,7 +48,7 @@ const ScrambleText = ({ enter, hasPermission }) => {
       //    //  charRef.current.innerText = targetString
       //  }})
        }
-     },[enter, hasPermission])
+     },[enter])
 
   return <p ref={charRef}></p>;
 };

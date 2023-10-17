@@ -28,6 +28,7 @@ const App = () => {
        .then((permissionState) => {
          if (permissionState === "granted") {
            setHasPermission(true);
+           isEnter(true)
          } else {
            console.error("Permission denied for device orientation.");
          }
@@ -51,21 +52,6 @@ const App = () => {
       }
     }, [hasPermission]);
 
-// ".-.. . .- .-. -. .. -. --"
-   //  useEffect(() => {
-   //   if (enter || hasPermission) {
-   //    let tl = gsap.timeline({ delay: 1})
-   //    tl.to(charRef.current, {duration: audioRef.current.duration, 
-   //       text: ".-.. . .- .-. -. .. -. --", onStart: () => {
-   //       audioRef.current.play()
-   //    }, onComplete: () => { 
-   //       audioRef.current.pause(); 
-   //       setStartAnim(true) 
-   //    }})
-   //    }
-   //  },[enter, hasPermission])
-
-
 
   const onMouseMove = (event) => {
    if (!isMobile) {
@@ -83,10 +69,7 @@ const App = () => {
      { !isMobile && !enter &&
        <div onClick={() => isEnter(true)} className="enter"> <p>ENTER</p></div> }
          <div className='diction'>
-         <ScrambleText enter={enter} hasPermission={hasPermission}/> 
-             {/* <p ref={charRef}> */}
-               {/* { startAnim? <ScrambleText startAnim={startAnim}/> : '' } */}
-            {/* </p> */}
+         <ScrambleText enter={enter}/> 
          </div>
          <div className="notch">
          <Notch/>
