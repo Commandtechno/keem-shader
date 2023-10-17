@@ -1,14 +1,12 @@
 import './App.css'
-import { useRef, useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Canvas, extend } from "@react-three/fiber";
 import { Effects } from '@react-three/drei';
 import { GlitchPass } from "./GlitchPass";
 import Eyes from './components/Eyes';
-import { gsap } from "gsap";
 import ScrambleText from './components/ScrambleText';
 import {ReactComponent as Notch} from './Website-Notch.svg';
-import { TextPlugin } from "gsap/TextPlugin";
-gsap.registerPlugin(TextPlugin);
+
 
 extend({ GlitchPass });
 
@@ -19,9 +17,9 @@ const App = () => {
    const [deviceOrientation, setDeviceOrientation] = useState({ alpha: 0, beta: 0, gamma: 0 });
    const [hasPermission, setHasPermission] = useState(false); // Permission state
    const [enter, isEnter] = useState(false)
-   const charRef = useRef(null);
-   const audioRef = useRef(new Audio('/assets/morse-1.wav'));
-   const [startAnim, setStartAnim] = useState(false)
+   // const charRef = useRef(null);
+   // const audioRef = useRef(new Audio('/assets/morse-1.wav'));
+   // const [startAnim, setStartAnim] = useState(false)
 
   const getPermssion = (e) => {
    if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
@@ -54,18 +52,18 @@ const App = () => {
     }, [hasPermission]);
 
 // ".-.. . .- .-. -. .. -. --"
-    useEffect(() => {
-     if (enter || hasPermission) {
-      let tl = gsap.timeline({ delay: 1})
-      tl.to(charRef.current, {duration: audioRef.current.duration, 
-         text: "L e a r n i n g", onStart: () => {
-         audioRef.current.play()
-      }, onComplete: () => { 
-         audioRef.current.pause(); 
-         // setStartAnim(true) 
-      }})
-      }
-    },[enter, hasPermission])
+   //  useEffect(() => {
+   //   if (enter || hasPermission) {
+   //    let tl = gsap.timeline({ delay: 1})
+   //    tl.to(charRef.current, {duration: audioRef.current.duration, 
+   //       text: ".-.. . .- .-. -. .. -. --", onStart: () => {
+   //       audioRef.current.play()
+   //    }, onComplete: () => { 
+   //       audioRef.current.pause(); 
+   //       setStartAnim(true) 
+   //    }})
+   //    }
+   //  },[enter, hasPermission])
 
 
 
@@ -85,9 +83,10 @@ const App = () => {
      { !isMobile && !enter &&
        <div onClick={() => isEnter(true)} className="enter"> <p>ENTER</p></div> }
          <div className='diction'>
-             <p ref={charRef}>
+         <ScrambleText enter={enter} hasPermission={hasPermission}/> 
+             {/* <p ref={charRef}> */}
                {/* { startAnim? <ScrambleText startAnim={startAnim}/> : '' } */}
-            </p>
+            {/* </p> */}
          </div>
          <div className="notch">
          <Notch/>

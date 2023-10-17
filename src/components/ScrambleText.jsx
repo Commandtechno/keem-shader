@@ -1,37 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { shuffle }from 'txt-shuffle';
+import audioSrc from "../assets/morse-1.wav";
 
-const ScrambleText = ( { startAnim }) => {
-  const targetString = "learning";
-  const originalString = ".-.. . .- .-. -. .. -. --";
-  const scrambleChars = ['.', '--', '-', '.'];
-  const [scrambledString, setScrambledString] = useState(originalString);
+const ScrambleText = ({ enter, hasPermission }) => {
+   const charRef = useRef(null);
+   const audioRef = useRef(new Audio(audioSrc));
+   const { duration } = audioRef.current;
+   // const targetString = "L  e  a  r  n  i  n  g";
+   const targetString = "learning";
+   const originalString = ".-.. . .- .-. -. .. -. --";
+   let isPlaying = false;
 
-  useEffect(() => {
-   if (startAnim) {
-    const scrambleInterval = setInterval(() => {
-      setScrambledString((prevString) => scramble(prevString, targetString, scrambleChars));
-    }, 500); // Update every 100ms
+   
+   useEffect(() => {
+      if (enter || hasPermission) {
+    
+            shuffle({ 
+               text: targetString, 
+               fps: 24, 
+               direction: 'random',
+               glyphs: originalString,
+               duration: duration, 
+               onUpdate: (output) => {
+                  if (isPlaying) {
+                     charRef.current.innerText = output
+                  } else {
+                     audioRef.current.play();
+                     isPlaying = true
+                  }
+               },
+               onComplete: () => {
+                  audioRef.current.pause();
+               }
+            })
+         
+      //  let tl = gsap.timeline({ delay: 1, duration: audioRef.current.duration})
 
-    setTimeout(() => {
-      clearInterval(scrambleInterval);
-    }, 10000); // Stop after 10 seconds
+      //  tl.to(charRef.current, {
+      // onStart: () => {
+      //     audioRef.current.play()
+      //    //  shuffle({ text: targetString, fps: 25, onUpdate: (output) => {
+      //    //    charRef.current.innerText = output
+      //    //  } });
+      //  }, 
+      //  onComplete: () => { 
+      //     audioRef.current.pause(); 
+      //    //  charRef.current.innerText = targetString
+      //  }})
+       }
+     },[enter, hasPermission])
 
-    return () => { clearInterval(scrambleInterval) }
-   }
-  }, []);
-
-  const scramble = (str, target, chars) => {
-    const indexToScramble = Math.floor(Math.random() * str.length);
-    const scrambledArray = str.split('');
-    if (str[indexToScramble] !== target[indexToScramble]) {
-      scrambledArray[indexToScramble] = chars[Math.floor(Math.random() * chars.length)];
-    }
-    return scrambledArray.join('');
-  };
-
-  return (
-      <p>{scrambledString}</p>
-  );
+  return <p ref={charRef}></p>;
 };
 
 export default ScrambleText;
