@@ -70,8 +70,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
           if (beta === -1) {
             targetRotationY = gamma * (Math.PI / 12) * sensitivityY * betaSign; // Adjust rotation based on beta sign
          } else {
-            targetRotationY = -gamma * (Math.PI / 12) * sensitivityY; // Adjust rotation based on beta sign
-            console.log(beta)
+            targetRotationY = -gamma * (Math.PI / 12) * sensitivityY; // Adjust rotation 
          }
          objRef.current.rotation.x += 0.04 * (clampedRotationX - objRef.current.rotation.x);
          objRef.current.rotation.y += 0.03 * (targetRotationY - objRef.current.rotation.y);
