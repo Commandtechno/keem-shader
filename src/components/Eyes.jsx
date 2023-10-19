@@ -58,10 +58,13 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
          // const alpha = deviceOrientation.alpha;
          const beta = deviceOrientation.beta || 0;
          const gamma = deviceOrientation.gamma || 0;
-         let targetRotationY;
-         
          const betaSign = Math.sign(beta);
-         const targetRotationX = (phoneAngle - beta) * (Math.PI / 12) * sensitivityX;
+         let targetRotationY, targetRotationX;
+         
+       
+         targetRotationX = (phoneAngle - beta) * (Math.PI / 12) * sensitivityX;
+         const clampedRotationX = Math.max(0, Math.min(0.5, targetRotationX));
+
          const positionY = beta * 0.2;
          objRef.current.position.y = positionY;
           if (beta === -1) {
@@ -70,8 +73,8 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
             targetRotationY = -gamma * (Math.PI / 12) * sensitivityY; // Adjust rotation based on beta sign
             console.log(beta)
          }
-         objRef.current.rotation.x += 0.04 * (targetRotationX - objRef.current.rotation.x);
-         // objRef.current.rotation.y += 0.03 * (targetRotationY - objRef.current.rotation.y);
+         objRef.current.rotation.x += 0.04 * (clampedRotationX - objRef.current.rotation.x);
+         objRef.current.rotation.y += 0.03 * (targetRotationY - objRef.current.rotation.y);
        }
      });
 
