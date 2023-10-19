@@ -7,28 +7,24 @@
 
 @font-face {
    font-family: Keem;
-   src: url(/public/fonts/kEEMbold.ttf);
+   src: url(/public/assets/KEEM.ttf);
  }
 
  body {
    overflow: hidden;
-   /* filter: hue-rotate(50deg); */
+   filter: invert(1) contrast(10);
  }
 
 main {
-   background-color: black;
    width: 100vw;
    height: 100vh;
    overflow: hidden;
-   filter: contrast(1); 
-   
-
 }
 
 .enter {
    position: absolute;
    width: 100vw;
-   height: 90vh;
+   height: 100%;
    font-family: "Keem";
    text-transform: uppercase;
    display: -webkit-box;
@@ -41,55 +37,64 @@ main {
        -ms-flex-align: center;
            align-items: center;
    background-color: #f4f4f4;
-   color: rgba(250, 290, 290, 20);
+   color: rgba(65,65,65);
    z-index: 10 !important;
-   display: none;
+   
 }
 
+.notch {
+   position: absolute;
+   width: 100vw;
+   height: 100%;
+   top: 0;
+   left: 0;
+   pointer-events: none;
+}
+
+.notch svg {
+   width: 20vw;
+   height: auto;
+   margin-top: -4.95%;
+   margin-left: 75%;
+}
+
+canvas {
+ filter: saturate(0.5) hue-rotate(5deg)
+}
 
 .enter p:hover {
-   opacity: 0.5;
+   color: rgba(25,25,25);
+   cursor: pointer;
 }
 
 .diction {
-   width: 9vw;
-   display: flex;
    z-index: 1;
    position: absolute;
-   font-family: auto;
-   text-transform: uppercase;
    left: 50%;
    top:80%;
    -webkit-transform: translate(-50%, 0%);
        -ms-transform: translate(-50%, 0%);
            transform: translate(-50%, 0%);
-           color: rgba(250, 290, 290, 20);
    pointer-events: none;
 }
-.diction p{
-   fill: rgb(255, 255, 255);
-   font-family: "Keem";
-}
 
-@keyframes fading-loader {
-   to {
-       opacity: 0;
-   }
+.diction p {
+   color: rgb(91, 91, 91);
+   font-family: "Keem";
+   text-transform: uppercase;
 }
 
 
 @media (max-width: 576px) {
-
    .diction, .enter {
       font-size: 0.8rem;
+      /* display: none; */
    }
 
-   .diction {
-      /* top: 80%; */
+   .notch svg {
+      width: 40vw;
+      margin-top: -10%;
+      margin-left: 65%;
    }
 
-   main { 
-      /* -webkit-filter: blur(1px) contrast(1); 
-              filter: blur(1px) contrast(1); */
-   }
  }
