@@ -6,14 +6,13 @@ import { useGLTF } from "@react-three/drei";
 useGLTF.preload('/Eyes_Keem-Small.glb');
 
 
-
 const Eyes = ({ mousePosition, deviceOrientation }) => {
 
    const isMobile = window.innerWidth <= 576; 
    const objRef = useRef();
    const matRef = useRef();
-   const objScale = isMobile ? 1.1 : 1.9;
-   const objPos = isMobile ? [-24.442, -4.754, 38.842] : [-44.442, 4.754, 38.842]
+   const objScale = isMobile ? 0.9 : 1.5;
+   const objPos = isMobile ? [-6.111, 1.188, 9.711] : [-6.111, 1.188, 9.711]
    const { nodes, materials } = useGLTF('/Eyes_Keem-Small.glb')
      const phoneAngle = 90; // Set the initial beta value you want
       const sensitivityY = 0.03; 
@@ -69,6 +68,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
             targetRotationY = gamma * (Math.PI / 12) * sensitivityY * betaSign; // Adjust rotation based on beta sign
          } else {
             targetRotationY = -gamma * (Math.PI / 12) * sensitivityY; // Adjust rotation based on beta sign
+            console.log(beta)
          }
          objRef.current.rotation.x += 0.04 * (targetRotationX - objRef.current.rotation.x);
          objRef.current.rotation.y += 0.03 * (targetRotationY - objRef.current.rotation.y);
@@ -83,10 +83,10 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
          scale={objScale}
          castShadow
          receiveShadow
-         geometry={nodes.Boole.geometry}
-        material={nodes.Boole.material}
+         geometry={nodes.Volume_Mesher.geometry}
+         material={nodes.Volume_Mesher.material}
          position={objPos}>
-            <meshStandardMaterial ref={matRef} color={"rgb(65,65,65)"}/>
+         <meshStandardMaterial ref={matRef} color={"rgb(65,65,65)"}/>
       </mesh>
        
      </group>
