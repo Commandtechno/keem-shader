@@ -12,7 +12,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
    const objRef = useRef();
    const matRef = useRef();
    const objScale = isMobile ? 0.9 : 1.5;
-   const objPos = isMobile ? [-6.111, 1.188, 9.711] : [-6.111, 1.188, 9.711]
+   const objPos = isMobile ? [-6.111, 20, 9.711] : [-6.111, 1.188, 9.711]
    const { nodes, materials } = useGLTF('/Eyes_Keem-Small.glb')
      const phoneAngle = 90; // Set the initial beta value you want
       const sensitivityY = 0.03; 
@@ -71,7 +71,7 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
             console.log(beta)
          }
          objRef.current.rotation.x += 0.04 * (targetRotationX - objRef.current.rotation.x);
-         objRef.current.rotation.y += 0.03 * (targetRotationY - objRef.current.rotation.y);
+         // objRef.current.rotation.y += 0.03 * (targetRotationY - objRef.current.rotation.y);
        }
      });
 
