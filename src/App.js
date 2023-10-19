@@ -17,9 +17,6 @@ const App = () => {
    const [deviceOrientation, setDeviceOrientation] = useState({ alpha: 0, beta: 0, gamma: 0 });
    const [hasPermission, setHasPermission] = useState(false); // Permission state
    const [enter, isEnter] = useState(false)
-   // const charRef = useRef(null);
-   // const audioRef = useRef(new Audio('/assets/morse-1.wav'));
-   // const [startAnim, setStartAnim] = useState(false)
 
   const getPermssion = (e) => {
    if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
