@@ -76,7 +76,7 @@ const App = () => {
          </div>
         <main
           style={{backgroundColor: '#fAfffA'}}>
-          <Canvas camera={{ position: [0, 0, 300] }} >
+          <Canvas camera={{ position: [0, 0, 1000] }} >
                <Effects>
                   <glitchPass attach="passes"/>
                </Effects>
