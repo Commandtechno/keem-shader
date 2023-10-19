@@ -3,7 +3,7 @@
  import { gsap } from "gsap"
  import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
-useGLTF.preload("/Eyes_Keem.glb");
+useGLTF.preload('/Eyes_Keem-Small.glb');
 
 
 
@@ -12,9 +12,9 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
    const isMobile = window.innerWidth <= 576; 
    const objRef = useRef();
    const matRef = useRef();
-   const objScale = isMobile ? 0.58 : 1;
-   const objPos = isMobile ? [30, 0, 0] : [45.463, -29.926, 22.715]
-   const { nodes } = useGLTF("/Eyes_Keem.glb");
+   const objScale = isMobile ? 1.1 : 1.9;
+   const objPos = isMobile ? [-24.442, -4.754, 38.842] : [-44.442, 4.754, 38.842]
+   const { nodes, materials } = useGLTF('/Eyes_Keem-Small.glb')
      const phoneAngle = 90; // Set the initial beta value you want
       const sensitivityY = 0.03; 
       const sensitivityX = 0.04; 
@@ -83,8 +83,8 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
          scale={objScale}
          castShadow
          receiveShadow
-         geometry={nodes.Volume_Mesher.geometry}
-         material={nodes.Volume_Mesher.material}
+         geometry={nodes.Boole.geometry}
+        material={nodes.Boole.material}
          position={objPos}>
             <meshStandardMaterial ref={matRef} color={"rgb(65,65,65)"}/>
       </mesh>
