@@ -1,11 +1,11 @@
-import './App.css'
-import { useState, useEffect, Suspense } from "react";
+import './App.css';
+import React, { useState, useEffect, Suspense } from "react";
 import { Canvas, extend } from "@react-three/fiber";
 import { Effects } from '@react-three/drei';
 import { GlitchPass } from "./GlitchPass";
 import Eyes from './components/Eyes';
 import ScrambleText from './components/ScrambleText';
-import {ReactComponent as Notch} from './Website-Notch.svg';
+import { ReactComponent as Notch } from './Website-Notch.svg';
 
 
 extend({ GlitchPass });
@@ -69,6 +69,7 @@ const App = () => {
    // Check if the page has already loaded
    if (document.readyState === 'complete') {
      onPageLoad();
+     console.log('loaded')
    } else {
      window.addEventListener('load', onPageLoad, false);
      // Remove the event listener when component unmounts
@@ -76,7 +77,7 @@ const App = () => {
    }
  }, []);
 
-   if (loader) return <div>Loading..</div>
+   if (loader) return <div className='diction'>Loading..</div>
   return (
     <>
       <div style={{ width: "100vw", height: "100%" }} onMouseMove={onMouseMove}>
