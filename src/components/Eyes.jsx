@@ -5,6 +5,10 @@
 import { useGLTF } from "@react-three/drei";
 useGLTF.preload('/Eyes_Keem-Small.glb');
 
+// Define constants for better code readability
+const PHONE_ANGLE = 90;
+const SENSITIVITY_X = 0.04;
+const SENSITIVITY_Y = 0.03;
 
 const Eyes = ({ mousePosition, deviceOrientation }) => {
 
@@ -14,9 +18,6 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
    const objScale = isMobile ? 0.9 : 1.6;
    const objPos = isMobile ? [-6.111, 30, 9.711] : [-6.111, 5, 9.711]
    const { nodes, materials } = useGLTF('/Eyes_Keem-Small.glb')
-     const phoneAngle = 90; // Set the initial beta value you want
-      const sensitivityY = 0.03; 
-      const sensitivityX = 0.04; 
 
       useEffect(() => {
             // Create a MutationObserver
@@ -62,15 +63,15 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
          let targetRotationY, targetRotationX;
          
        
-         targetRotationX = (phoneAngle - beta) * (Math.PI / 12) * sensitivityX;
+         targetRotationX = (PHONE_ANGLE - beta) * (Math.PI / 12) * SENSITIVITY_X;
          const clampedRotationX = Math.max(0, Math.min(0.5, targetRotationX));
 
          const positionY = beta * 0.2;
          objRef.current.position.y = positionY;
           if (beta === -1) {
-            targetRotationY = gamma * (Math.PI / 12) * sensitivityY * betaSign; // Adjust rotation based on beta sign
+            targetRotationY = gamma * (Math.PI / 12) * SENSITIVITY_Y * betaSign; // Adjust rotation based on beta sign
          } else {
-            targetRotationY = -gamma * (Math.PI / 12) * sensitivityY; // Adjust rotation 
+            targetRotationY = -gamma * (Math.PI / 12) * SENSITIVITY_Y; // Adjust rotation 
          }
          objRef.current.rotation.x += 0.04 * (clampedRotationX - objRef.current.rotation.x);
          objRef.current.rotation.y += 0.03 * (targetRotationY - objRef.current.rotation.y);
