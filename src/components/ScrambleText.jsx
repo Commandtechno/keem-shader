@@ -6,14 +6,13 @@ const ScrambleText = ({ enter, hasPermission }) => {
    const charRef = useRef(null);
    const audioRef = useRef(new Audio(audioSrc));
    const { duration } = audioRef.current;
-   // const targetString = "L  e  a  r  n  i  n  g";
    const targetString = "learning";
    const originalString = ".-.. . .- .-. -. .. -. --";
    let isPlaying = false;
 
    
    useEffect(() => {
-      if (enter) {
+      if (enter || hasPermission) {
     
             shuffle({ 
                text: targetString, 
@@ -48,7 +47,7 @@ const ScrambleText = ({ enter, hasPermission }) => {
       //    //  charRef.current.innerText = targetString
       //  }})
        }
-     },[enter])
+     },[enter, hasPermission])
 
   return <p ref={charRef}></p>;
 };

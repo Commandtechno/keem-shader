@@ -5,7 +5,6 @@ import { Effects } from '@react-three/drei';
 import { GlitchPass } from "./GlitchPass";
 import Eyes from './components/Eyes';
 import ScrambleText from './components/ScrambleText';
-import { ReactComponent as Notch } from './Website-Notch.svg';
 
 
 extend({ GlitchPass });
@@ -80,17 +79,24 @@ const App = () => {
    if (loader) return <div className='diction'>Loading..</div>
   return (
     <>
+
       <div style={{ width: "100vw", height: "100%" }} onMouseMove={onMouseMove}>
-     { isMobile && !hasPermission && 
+     {/* { isMobile && !hasPermission && 
      <div onClick={getPermssion} className="enter"> <p>ENTER</p></div> }
      { !isMobile && !enter &&
-       <div onClick={() => isEnter(true)} className="enter"> <p>ENTER</p></div> }
+       <div onClick={() => isEnter(true)} className="enter"> <p>ENTER</p></div> } */}
+       {
+         isMobile? 
+         !hasPermission && <div onClick={getPermssion} className="enter"><p>ENTER</p></div> 
+         : 
+         !enter && <div onClick={() => isEnter(true)} className="enter"><p>ENTER</p></div>
+       }
          <div className='diction'>
-         <ScrambleText enter={enter}/> 
+            <ScrambleText enter={enter} hasPermission={hasPermission}/> 
          </div>
-         <div className="notch">
+         {/* <div className="notch">
          <Notch/>
-         </div>
+         </div> */}
         <main
           style={{backgroundColor: '#fAfffA'}}>
           <Canvas camera={{ position: [0, 0, 300] }} >

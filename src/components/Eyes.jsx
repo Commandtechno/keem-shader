@@ -26,7 +26,6 @@ const Eyes = ({ mousePosition, deviceOrientation }) => {
                  if (mutation.type === 'attributes' && mutation.attributeName === 'anim') {
                    const hasAnimAttribute = document.body.hasAttribute('anim');
                    if (hasAnimAttribute) {
-                     // console.log(matRef.current.emissive)
                       gsap.set(matRef.current.emissive, { r: 0.2, g: 0.2, b: 0.2 });
                       gsap.to('main', { backgroundColor: "darkgrey" , 
                       yoyo:true, duration: 0.1, repeat: 5, onComplete: () => {
