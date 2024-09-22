@@ -7,7 +7,7 @@ const ScrambleText = ({ enter, hasPermission }) => {
   const audioRef = useRef(null);
   const [canPlayThrough, setCanPlayThrough] = useState(false);
   const targetString = "learning";
-  const originalString = ".-.. . .- .-. -. .. -. --";
+  const originalString = ".-.. . .- .-. -. .. -. --.";
 
   useEffect(() => {
     if ((enter || hasPermission) && canPlayThrough) {
