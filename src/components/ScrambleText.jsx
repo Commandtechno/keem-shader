@@ -1,36 +1,31 @@
-import { useRef, useEffect } from 'react';
-import { shuffle }from 'txt-shuffle';
+import { useRef, useEffect, useState } from "react";
+import { shuffle } from "txt-shuffle";
 import audioSrc from "../assets/morse-1.wav";
 
 const ScrambleText = ({ enter, hasPermission }) => {
-   const charRef = useRef(null);
-   const targetString = "learning";
-   const originalString = ".-.. . .- .-. -. .. -. --";
-   let isPlaying = false;
+  const [chars, setChars] = useState("");
+  const audioRef = useRef(null);
+  const [canPlayThrough, setCanPlayThrough] = useState(false);
+  const targetString = "learning";
+  const originalString = ".-.. . .- .-. -. .. -. --";
 
-   
-   useEffect(() => {
-      if (enter || hasPermission) {
-            const audio = new Audio(audioSrc)
-            shuffle({ 
-               text: targetString, 
-               fps: 24, 
-               direction: 'random',
-               glyphs: originalString,
-              //  duration: audio.duration, 
-               onUpdate: (output) => {
-                  if (isPlaying) {
-                     charRef.current.innerText = output
-                  } else {
-                    audio.play();
-                     isPlaying = true
-                  }
-               },
-              //  onComplete: () => {
-              //    audio.pause();
-              //  }
-            })
-         
+  useEffect(() => {
+    if ((enter || hasPermission) && canPlayThrough) {
+      audioRef.current.play();
+      shuffle({
+        text: targetString,
+        fps: 24,
+        direction: "random",
+        glyphs: originalString,
+        duration: audioRef.current.duration,
+        onUpdate: output => {
+          setChars(output);
+        }
+        //  onComplete: () => {
+        //    audio.pause();
+        //  }
+      });
+
       //  let tl = gsap.timeline({ delay: 1, duration: audioRef.current.duration})
 
       //  tl.to(charRef.current, {
@@ -39,15 +34,20 @@ const ScrambleText = ({ enter, hasPermission }) => {
       //    //  shuffle({ text: targetString, fps: 25, onUpdate: (output) => {
       //    //    charRef.current.innerText = output
       //    //  } });
-      //  }, 
-      //  onComplete: () => { 
-      //     audioRef.current.pause(); 
+      //  },
+      //  onComplete: () => {
+      //     audioRef.current.pause();
       //    //  charRef.current.innerText = targetString
       //  }})
-       }
-     },[enter, hasPermission])
+    }
+  }, [enter, hasPermission, canPlayThrough]);
 
-  return <p ref={charRef}></p>;
+  return (
+    <>
+      <audio ref={audioRef} src={audioSrc} autoplay preload onCanPlayThrough={() => setCanPlayThrough(true)} />
+      <p>{chars}</p>
+    </>
+  );
 };
 
 export default ScrambleText;
